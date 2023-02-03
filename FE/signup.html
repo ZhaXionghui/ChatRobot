@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link rel="stylesheet" href="./signup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="welcomebox">
+            <p class="head">注册用户</p>
+            <p class="use">输入相关信息以注册用户</p>
+        </div>
+        <div class="user-act">
+            <li class="user">
+                <p class="user-txt">用户名</p>
+                <p>
+                    <input type="text" class="user-input"
+                    id="username_signup"  
+                    maxlength="13">
+                </p>
+            </li>
+            <li class="pwd">
+                <p class="pwd-txt">密码</p>
+                <div class="kuang">
+                    <input type="password" class="pwd-input" 
+                    id="password" 
+                    maxlength="13">
+                    <img src="picture/no_eye.png" id="eye">
+                </div>
+            </li>
+            <li class="pwd">
+                <p class="pwd-txt">确认密码</p>
+                <div class="kuang1">
+                    <input type="password" class="pwd-input" 
+                    id="password1" 
+                    maxlength="13">
+                    <img src="picture/no_eye.png" id="eye1">
+                </div>
+            </li>
+            <li class="mibao">
+                <p class="mibao_question">密保问题（用于找回密码）</p>
+                <p>
+                    <input type="text" class="user-input" 
+                    id = "question_signup"
+                    maxlength="13">
+                </p>
+            </li>
+            <li class="mibao">
+                <p class="mibao_answer">密保答案</p>
+                <p>
+                    <input type="text" 
+                    id = "answer_signup"
+                    maxlength="13">
+                </p>
+            </li>
+            <button class="submit-btn" onclick="signup()">
+                <p class="submit-txt">
+                    提交
+                </p>
+            </button>
+            <p class="register">
+                <span class="register-txt">
+                    已有账户？点击         
+                </span>
+                <span>
+                    <a href="./login.html">登录</a>                    
+                </span>
+            </p>
+        </div>
+    </div>
+</body>
+
+<script>
+        // 1.获取元素
+        var password = document.getElementById('password');
+        var eye = document.getElementById('eye');
+        var password1 = document.getElementById('password1');
+        var eye1 = document.getElementById('eye1');
+        var flag = 1;
+        // 2.注册事件 处理程序
+        eye.onclick = function () {
+        	// 应用flag 可以实现循环点击
+            if (flag === 0) {
+                // 点击一次后 flag 一定要变化
+                password.type = 'password';
+                // 修改 -图片路径
+                eye.src = "picture/no_eye.png";
+                // 同步双按钮
+                password1.type = 'password';
+                // 修改 -图片路径
+                eye1.src = "picture/no_eye.png";
+                flag = 1;//赋值操作
+            }  
+            else{
+                password.type = 'text';
+                // 修改 -图片路径
+                eye.src = "picture/eye.png";
+                // 同步双按钮
+                password1.type = 'text';
+                // 修改 -图片路径
+                eye1.src = "picture/eye.png";
+                flag = 0;
+            }
+        }
+        eye.onmousedown=function(e){
+	        //现代浏览器阻止默认事件
+	        if ( e && e.preventDefault ) 
+	            e.preventDefault(); 
+	        //IE阻止默认事件
+	        else 
+	            window.event.returnValue = false; 
+	        return false; 
+	        }
+        eye1.onclick = function () {
+        	if (flag === 0) {
+                // 点击一次后 flag 一定要变化
+                password.type = 'password';
+                // 修改 -图片路径
+                eye.src = "picture/no_eye.png";
+                // 同步双按钮
+                password1.type = 'password';
+                // 修改 -图片路径
+                eye1.src = "picture/no_eye.png";
+                flag = 1;//赋值操作
+            }  
+            else{
+                password.type = 'text';
+                // 修改 -图片路径
+                eye.src = "picture/eye.png";
+                // 同步双按钮
+                password1.type = 'text';
+                // 修改 -图片路径
+                eye1.src = "picture/eye.png";
+                flag = 0;
+            }
+        }
+        eye1.onmousedown=function(e){
+	        //现代浏览器阻止默认事件
+	        if ( e && e.preventDefault ) 
+	            e.preventDefault(); 
+	        //IE阻止默认事件
+	        else 
+	            window.event.returnValue = false; 
+	        return false; 
+	        }
+</script>
+<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+
+<script src="JS/axios/dist/axios.min.js"></script>
+
+
+<script src="JS/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    /* 弹框  */
+    function show(cfg){
+        swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            // 解构cfg对象，展开cfg对象所有属性
+            ...cfg
+        })
+    }
+    function signup() {
+        const username = document.querySelector('input#username_signup').value
+        const password = document.querySelector('input#password').value
+        const password1 = document.querySelector('input#password1').value
+        const mibao_question = document.querySelector('input#question_signup').value
+        const mibao_answer = document.querySelector('input#answer_signup').value
+        if (!username){
+            show({
+                title: '错误',
+                text: '用户名不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        if (!password | !password1){
+            show({
+                title: '错误',
+                text: '密码不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        if (!mibao_question){
+            show({
+                title: '错误',
+                text: '密保问题不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        if (!mibao_answer){
+            show({
+                title: '错误',
+                text: '密保答案不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        if (password != password1){
+            show({
+                title: '错误',
+                text: '两次密码不同',
+                icon: 'error',
+            })
+            return
+        }
+        // 弹框提示，正在请求中
+        show({
+            title: '提示',
+            text: '正在注册...',
+            icon: 'info',
+            button: false
+        })
+        // 发送AJAX请求
+        axios.post('http://121.4.80.238:5000/signup', {
+            username,
+            password,
+            mibao_question,
+            mibao_answer
+        }).then(res => {
+            const ret = res.data
+            if (ret.code){ // 错误
+                show({
+                    title: '错误',
+                    text: ret.msg,
+                    icon: 'error',
+                    button: {
+                        text: '好的'
+                    }
+                })
+            }else { // 成功
+                show({
+                    title: '提示',
+                    text: ret.msg,
+                    icon: 'success',
+                    button: {
+                        text: '好的'
+                    }
+                })
+                console.log(ret.msg)
+                console.log(ret.msg.t_id)
+                const t_id = ret.msg.t_id.toString()
+                localStorage.setItem('t_id', t_id);
+                // 跳转聊天页面
+                window.location.href='chat.html';
+            }
+        }).catch(err => {
+            show({
+                title: '错误',
+                text: err.message,
+                icon: 'error',
+                button: {
+                    text: '好的'
+                }
+            })
+        })
+    }
+</script>
+</html>

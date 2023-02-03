@@ -1,0 +1,152 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot</title>
+    <link rel="stylesheet" href="./chat.css">
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <script src="JS/axios/dist/axios.min.js"></script>
+    <script src="JS/sweetalert/dist/sweetalert.min.js"></script>
+    <script>  
+        window.onload = function(){
+            var arrIcon = ['./picture/1.jpg','./picture/Dio.jpg'];   
+            var num = 0;     //控制头像改变   
+            var iNow = -1;    //用来累加改变左右浮动   
+            var btn = document.getElementById('btn');
+            var content = document.getElementsByTagName('ul')[0];   
+            var img = content.getElementsByTagName('img');   
+            var span = content.getElementsByTagName('span');   
+            const t_id = localStorage.getItem('t_id');
+                /* 弹框  */
+            function show(cfg){
+                swal({
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                    // 解构cfg对象，展开cfg对象所有属性
+                    ...cfg
+                })
+            }            
+            btn.onclick = function(){   
+                if(text.value ==''){
+                    show({
+                            title: '错误',
+                            text: '不能发送空消息',
+                            icon: 'error',
+                        })
+                        return
+                }else {
+                    const message_info = document.querySelector('input#text').value
+
+                    this.src = arrIcon[0];
+                    content.innerHTML += '<li><img src="'+arrIcon[0]+'"><span>'+message_info+'</span></li>';
+                    iNow++;
+                    img[iNow].className += 'imgright';
+                    span[iNow].className += 'spanright';
+                    
+                    // 发送消息到服务器                    
+                    // 发送AJAX请求
+                    axios.post('http://121.4.80.238:5000/algo', {
+                        message_info,
+                        t_id
+                    }).then(res => {
+                        const ret = res.data
+                        if (ret.code){ // 错误
+                            show({
+                                title: '错误',
+                                text: ret.msg,
+                                icon: 'error',
+                                button: {
+                                    text: '好的'
+                                }
+                            })
+                        }else { // 成功
+                            for (var i in ret.msg) {  //遍历数组
+                                // console.log(ret.msg[i])
+                                this.src = arrIcon[1];
+                                content.innerHTML += '<li><img src="'+arrIcon[1]+'"><span>'+ret.msg[i]+'</span></li>';
+                                iNow++;
+                                img[iNow].className += 'imgleft';
+                                span[iNow].className += 'imgleft';
+                            }
+                            
+                        }
+                    }).catch(err => {
+                        show({
+                            title: '错误',
+                            text: err.message,
+                            icon: 'error',
+                            button: {
+                                text: '好的'
+                            }
+                        })
+                    })
+                    text.value = '';   
+     // 内容过多时,将滚动条放置到最底端   
+     contentcontent.scrollTop=content.scrollHeight;     
+                }
+            }
+            btn.onmousedown=function(e){
+	        //现代浏览器阻止默认事件
+	        if ( e && e.preventDefault ) 
+	            e.preventDefault(); 
+	        //IE阻止默认事件
+	        else 
+	            window.event.returnValue = false; 
+	        return false; 
+	        }
+        }   
+    </script>  
+</head>  
+<body>  
+    <div id="container">  
+        <div class="header">  
+            <a href="./login.html"><img src="./picture/direction_Left1.png" class="back"></a>
+            <span class="name">Robot</span>  
+            
+        </div>  
+        <ul class="content">
+            <li>
+                <!-- <img src="">
+                <span></span> -->
+            </li>
+        </ul>  
+        <div class="footer">  
+            <div id="user_face_icon">  
+                <img src="./picture/1.jpg" alt="">  
+            </div>  
+            <input id="text" type="text" placeholder="说点什么吧...">  
+            <span id="btn" @touchend.prevent = 'onclick'>发送</span>  
+        </div>  
+    </div>  
+</body>
+
+<script src="JS/axios/dist/axios.min.js"></script>
+<script src="JS/sweetalert/dist/sweetalert.min.js"></script>
+<script> 
+    // 读取数据
+    const passwd = localStorage.getItem('passwd');
+    function show(cfg){
+    swal({
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        // 解构cfg对象，展开cfg对象所有属性
+        ...cfg
+    })
+    }
+    if (passwd) {
+        console.log(passwd)
+        show({
+                title: '您的密码是',
+                text: passwd,
+                icon: 'info',
+                button: {
+                    text: '好的'
+                }
+            })
+    }
+    
+</script>  
+
+</html>
