@@ -136,7 +136,7 @@
     })
     }
     if (passwd) {
-        console.log(passwd)
+        localStorage.removeItem('passwd')
         show({
                 title: '您的密码是',
                 text: passwd,
