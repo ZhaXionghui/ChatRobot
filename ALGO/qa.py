@@ -172,6 +172,9 @@ if __name__ == "__main__":
     with open("/root/Dev/ALGO/token.txt", "r") as f:  #
      token = f.read()
     question=input("您好，智能校园问答系统为您服务，请问您有什么想问的呢？")
+    with open(os.path.expanduser("config.yaml"), "r") as config:
+        code = yaml.load(config, Loader=yaml.FullLoader)
+        openai.api_key = code["OPENAI_API_KEY"]
     #获取关键词
     key=key_word(question)
     #return 返回答案，文字答案均为列表格式，还需进一步处理
