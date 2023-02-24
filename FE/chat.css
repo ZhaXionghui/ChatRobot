@@ -1,36 +1,57 @@
+  /**重置标签默认样式*/   
 * {   
     margin: 0;   
     padding: 0;   
     list-style: none;   
-    font-family: '楷体' !important
+    font-family: '宋体' !important
+      
 }
+
 #container { 
     width: 10rem; 
-    background: #eee;   
+    /* height: 780px; */
+    /* min-height: 100vh; */
+    /* height:  13.6rem; */
+    background: #F0F0F2;   
     margin: 0 auto;
+    /* position: relative; */
     bottom: 0;
+    /* box-shadow: 20px 20px 55px #777; */
 }   
 .header {   
-    background: #000;   
+    background: #F0F0F2;   
     height: 4vh;   
-    color: #fff;
+    color: #333333;
+    /* line-height: 300px; */
     font-size: 3.2vh;   
     padding-top: 2vh;
     padding-left: 0.2rem;
+    /* text-align: center; */
 }
+
 .header img {
     position: relative;
     text-align: left !important;
+    /* padding-top: 2vh; */
+    /* padding-left: 2vh; */
     height: 3vh;
     width: 3vh;
+    
 }
+
 .header .name {
     position: absolute;
     height: 4vh;
-    padding-left: 3.2rem;
-    font-size: 4vh;
+    /* width: 10rem; */
+    padding-left: 3.925rem;
+    font-size: 3.5vh;
     top: 1vh;
+    /* bottom: .5vh; */
+    /* text-align: center; */
+    /* left: 4rem; */
 }
+
+
 .content {   
     font-size: .5rem;   
     width: 9rem; 
@@ -38,6 +59,7 @@
     overflow: auto;   
     padding: .3rem;   
 }
+
 .content li {   
     margin-top: .01rem;   
     padding-left: .05rem;   
@@ -46,11 +68,14 @@
     clear: both;
     overflow: hidden;
 } 
+
 .content li img {
     float: left;
+    
 }
+
 .content li span{   
-    background: #7cfc00;   
+    background: #FFFFFF;   
     padding: .15rem;   
     border-radius: 8px;   
     float: left;   
@@ -59,28 +84,36 @@
     border: .1px solid #ccc;   
     box-shadow: 0 0 .1rem #ccc;   
 }  
+
 .content li img.imgleft {    
     float: left;   
 }   
 .content li img.imgright {    
     float: right;    
 } 
+
 .content li span.spanleft {    
     float: left;   
-    background: #7cfc00;   
+    background: #FFFFFF;   
 }   
-.content li span.spanright {    
+.content li span.spanright { 
+    color: #FEFEFF;   
     float: right;   
-    background: #7cfc00;   
+    background: #3D5CFF;   
 } 
+
+
+
+
 .footer {   
     width: 9.5rem;   
     height: 1rem;   
-    background: #666;   
+    background: #F8F8F8;   
     position: absolute;   
     bottom: 0;   
     padding: .2rem;
 } 
+
 .footer input {
     display: inline-flex;
     width: 7rem;   
@@ -92,14 +125,16 @@
     border-radius: 6px;   
     right: 1.5rem;   
 }
+ 
 .footer span {   
     display: inline-block;   
     width: 1.45rem;   
     height: 1rem;   
-    background: #08BF62;   
+    background: #3D5CFF;   
     font-weight: 900;
-    color: #eee;
+    color: #FFFFFF;
     font-size: .5rem;
+
     line-height: .95rem;   
     cursor: pointer;   
     text-align: center;   
@@ -107,6 +142,7 @@
     right: .05rem;   
     border-radius: 6px;   
 }
+
 .footer span:hover {   
     color: #fff;   
     background: #999;   
@@ -118,6 +154,7 @@
     height: 1rem;   
     border-radius: 30px;   
     position: relative;   
+    /* bottom: .1rem;    */
     right: .1rem;
     cursor: pointer;   
     overflow: hidden;   
