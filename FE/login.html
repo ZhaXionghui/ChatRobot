@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="welcomebox">
+            <p class="head">欢迎您使用校园AI</p>
+            <p class="use">使用您的用户名登录&注册新的用户</p>
+        </div>
+
+        <div class="user-act">
+            <li class="user">
+                <p class="user-txt">用户名</p>
+                <p>
+                    <input type="text" class="user-input"
+                    name="username"    
+                    maxlength="13">
+                </p>
+            </li>
+<!-- 发username和password -->
+            <li class="pwd">
+                <p class="pwd-txt">密码</p>
+                <div class="kuang">
+                    <input type="password" class="pwd-input" 
+                    name="password"
+                    id="password" 
+                    maxlength="13">
+                    <img src="picture/no_eye.png" id="eye">
+                </div>
+            </li>
+            
+            <a href="./secret account.html">
+                <p class="forget">
+                    忘记密码？
+                </p>
+            </a>
+            <button class="login-btn" 
+            onclick="login()">
+                <p class="login-txt">
+                    登录
+                </p>
+            </button>
+                        
+            <p class="register">
+                <span class="register-txt">
+                    还没有账户？点击         
+                </span>
+                <span>
+                    <a href="./signup.html">注册</a>                    
+                </span>
+            </p>
+        </div>
+
+        <div id="res">
+            <img src="" alt="">
+            <span></span>
+        </div>
+        
+    </div>
+</body>
+
+<!-- secret function : eyes hiding-->
+<script>
+    // 1.获取元素
+    var password = document.getElementById('password');
+    var eye = document.getElementById('eye');
+    var flag = 1;
+    // 2.注册事件 处理程序
+    eye.onclick = function () {
+        // 应用flag 可以实现循环点击
+        if (flag === 0) {
+            // 点击一次后 flag 一定要变化
+            password.type = 'password';
+            // 修改 -图片路径
+            eye.src = "picture/no_eye.png";
+            flag = 1;//赋值操作
+        } else{
+            password.type = 'text';
+            // 修改 -图片路径
+            eye.src = "picture/eye.png";
+            flag = 0;
+        }
+    }
+    eye.onmousedown=function(e){
+        //现代浏览器阻止默认事件
+        if ( e && e.preventDefault ) 
+            e.preventDefault(); 
+        //IE阻止默认事件
+        else 
+            window.event.returnValue = false; 
+        return false; 
+        }
+</script>
+
+<!-- 自适应js组件 -->
+<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+
+<!-- 登录 -->
+<script src="JS/axios/dist/axios.min.js"></script>
+<script src="JS/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    // 显示服务器
+    const avatar = document.querySelector('#res img')
+    const nickname = document.querySelector('#res span')
+    /*
+    弹框
+     */
+    function show(cfg){
+        swal({
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            // 解构cfg对象，展开cfg对象所有属性
+            ...cfg
+        })
+    }
+
+    function login() {
+        const username = document.querySelector('input.user-input').value
+        // console.log(username)
+        if (!username){
+            show({
+                title: '错误',
+                text: '用户名不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        const password = document.querySelector('input.pwd-input').value
+        if (!password){
+            show({
+                title: '错误',
+                text: '密码不能为空',
+                icon: 'error',
+            })
+            return
+        }
+        // 弹框提示，正在请求中
+        show({
+            title: '提示',
+            text: '正在登录中...',
+            icon: 'info',
+            button: false
+        })
+
+        // 发送AJAX请求
+        axios.post('http://121.4.80.238:5000/login', {
+            username,
+            password
+        }).then(res => {
+            const ret = res.data
+            if (ret.code){ // 错误
+                show({
+                    title: '错误',
+                    text: ret.msg,
+                    icon: 'error',
+                    button: {
+                        text: '好的'
+                    }
+                })
+            }else { // 成功
+                show({
+                    title: '提示',
+                    text: ret.msg,
+                    icon: 'success',
+                    button: {
+                        text: '好的'
+                    }
+                })
+                const t_id = ret.msg[2].toString()
+                localStorage.setItem('t_id', t_id);
+                // 跳转聊天页面
+                window.location.href='chat.html';
+            }
+        }).catch(err => {
+            show({
+                title: '错误',
+                text: err.message,
+                icon: 'error',
+                button: {
+                    text: '好的'
+                }
+            })
+        })
+    }
+</script>
+</html>
