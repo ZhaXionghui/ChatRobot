@@ -134,7 +134,7 @@ conda install pymssql
 
 
 ## 视频链接
-1. 场景划分，前后端数据库初步构建，文心大模型调用与训练方法
+1. 场景划分，前后端数据库初步构建，文心大模型调用与训练方法  
    【校园对话机器人项目 11月工作汇报】 https://www.bilibili.com/video/BV1fP4y1X7YP
-2. 全项目讲解
+3. 全项目讲解  
    【校园对话机器人项目】 https://www.bilibili.com/video/BV1cR4y1679A
